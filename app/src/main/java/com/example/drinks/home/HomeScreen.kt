@@ -1,5 +1,6 @@
 package com.example.drinks.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -23,6 +24,7 @@ fun HomeScreen(
   homeScreenViewModel: HomeScreenViewModel? = hiltViewModel()
 ) {
   Column(
+    verticalArrangement = Arrangement.spacedBy(16.dp),
     modifier = Modifier.padding(24.dp)
   ) {
     Text(
@@ -35,7 +37,7 @@ fun HomeScreen(
 
     HardCodedTop()
 
-    homeScreenViewModel?.drinkList?.let { DrinkGrid(items = it) }
+    homeScreenViewModel?.drinkList?.value?.let { DrinkGrid(items = it) }
   }
 }
 

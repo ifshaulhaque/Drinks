@@ -1,6 +1,7 @@
 package com.example.drinks.home
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.drinks.api.Outcome
 import com.example.drinks.api.Repository
@@ -13,10 +14,10 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
   private val repository: Repository
 ): ViewModel() {
-  private val _ingredientList = mutableListOf<IngredientModel>()
+  private val _ingredientList = mutableStateOf<ArrayList<IngredientModel>>(arrayListOf())
   val ingredientList = _ingredientList
 
-  private val _drinksList = mutableListOf<DrinkModel>()
+  private val _drinksList = mutableStateOf<ArrayList<DrinkModel>>(arrayListOf())
   val drinkList = _drinksList
 
   init {
@@ -27,8 +28,7 @@ class HomeScreenViewModel @Inject constructor(
   private fun getIngredientList() {
     repository.getIngredientList { outcome ->
       if (outcome is Outcome.Success) {
-        _ingredientList.clear()
-        _ingredientList.addAll(outcome.value.drinks)
+        _ingredientList.value = outcome.value.drinks
       } else {
         Log.e("error","error on getting ingredients")
       }
@@ -38,8 +38,7 @@ class HomeScreenViewModel @Inject constructor(
   private fun getRandomDrinks() {
     repository.getRandomDrinks { outcome ->
       if (outcome is Outcome.Success) {
-        _drinksList.clear()
-        _drinksList.addAll(outcome.value.drinks)
+        _drinksList.value = outcome.value.drinks
       } else {
         Log.e("error","error on getting Random Drinks")
       }
@@ -49,8 +48,7 @@ class HomeScreenViewModel @Inject constructor(
   fun getDrinksByIngredientName(name: String) {
     repository.getDrinksByIngredientName(name) { outcome ->
       if (outcome is Outcome.Success) {
-        _drinksList.clear()
-        _drinksList.addAll(outcome.value.drinks)
+        _drinksList.value = outcome.value.drinks
       } else {
         Log.e("error","error on getting DrinksByIngredientName")
       }

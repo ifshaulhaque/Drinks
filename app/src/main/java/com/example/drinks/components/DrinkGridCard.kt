@@ -13,7 +13,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -36,7 +35,7 @@ fun DrinkGridCard(
   Box(
     modifier = Modifier
       .background(
-        color = Color.LightGray,
+        color = MaterialTheme.colorScheme.secondaryContainer,
         shape = RoundedCornerShape(20.dp)
       )
       .padding(8.dp)
@@ -48,7 +47,7 @@ fun DrinkGridCard(
         contentScale = ContentScale.Crop,
         modifier = Modifier
           .fillMaxWidth()
-          .height(250.dp)
+          .height(100.dp)
           .clip(
             shape = RoundedCornerShape(20.dp)
           )
@@ -58,7 +57,7 @@ fun DrinkGridCard(
         Text(
           text = it,
           style = TextStyle(
-            fontSize = 24.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold
           )
         )
@@ -68,35 +67,32 @@ fun DrinkGridCard(
         Text(
           text = it,
           style = TextStyle(
-            fontSize = 16.sp,
+            fontSize = 12.sp,
           )
         )
       }
 
-      Row(
-        verticalAlignment = Alignment.CenterVertically
-      ) {
-        Text(
-          text = "₹ ${Random.nextInt(100, 2001)}",
-          style = TextStyle(
-            fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.primary
-          ),
-          modifier = Modifier.weight(1f)
-        )
+      Text(
+        text = "₹ ${Random.nextInt(100, 2001)}",
+        style = TextStyle(
+          fontSize = 16.sp,
+          color = MaterialTheme.colorScheme.primary
+        ),
+        modifier = Modifier.weight(1f)
+      )
 
-        Button(
-          onClick = {}
-        ) {
-          Row {
-            Text(
-              text = "+ Add",
-              style = TextStyle(
-                fontSize = 20.sp,
-                color = Companion.White
-              )
+      Button(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {}
+      ) {
+        Row {
+          Text(
+            text = "+ Add",
+            style = TextStyle(
+              fontSize = 16.sp,
+              color = Companion.White
             )
-          }
+          )
         }
       }
     }

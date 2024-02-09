@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -56,7 +57,7 @@ fun HardCodedTop() {
     Box(
       modifier = Modifier
         .background(
-          color = Color.LightGray,
+          color = MaterialTheme.colorScheme.secondaryContainer,
           shape = RoundedCornerShape(20.dp)
         )
         .padding(8.dp)
