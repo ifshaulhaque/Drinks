@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.example.drinks.home.HomeScreen
 
 @Composable
 fun NavGraph(
@@ -17,7 +18,7 @@ fun NavGraph(
     setComposable(
       route = RoutePath.HomeScreen.route
     ) {
-
+      HomeScreen(navController = navController)
     }
   }
 }

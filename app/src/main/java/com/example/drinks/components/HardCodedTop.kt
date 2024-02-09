@@ -71,7 +71,7 @@ fun HardCodedTop() {
           contentDescription = "drinkImage",
           contentScale = ContentScale.Crop,
           modifier = Modifier
-            .width(200.dp)
+            .weight(1f)
             .clip(
               shape = RoundedCornerShape(20.dp)
             )
@@ -79,7 +79,9 @@ fun HardCodedTop() {
 
         Column(
           verticalArrangement = Arrangement.SpaceBetween,
-          modifier = Modifier.fillMaxHeight()
+          modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f)
         ) {
           Text(
             text = "Blue Restaurant",
