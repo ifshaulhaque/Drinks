@@ -70,7 +70,7 @@ fun DetailScreen(
         contentScale = ContentScale.Crop,
         modifier = Modifier
           .fillMaxWidth()
-          .height(100.dp)
+          .weight(1f)
           .clip(
             shape = RoundedCornerShape(20.dp)
           )
