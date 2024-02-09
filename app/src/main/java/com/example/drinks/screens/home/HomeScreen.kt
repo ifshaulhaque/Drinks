@@ -1,4 +1,4 @@
-package com.example.drinks.home
+package com.example.drinks.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

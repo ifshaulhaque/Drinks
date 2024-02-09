@@ -1,4 +1,4 @@
-package com.example.drinks.home
+package com.example.drinks.screens.home
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
