@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.drinks.Constants.SLASH_REPLACE
 import com.example.drinks.R
 import com.example.drinks.RoutePath
 import com.example.drinks.model.DrinkModel
@@ -53,7 +54,7 @@ fun DrinkGridCard(
       .clickable {
         detailViewModel
           ?.getDrinkString(drinkModel)
-          ?.let {
+          ?.replace("/", SLASH_REPLACE)?.let {
             navController.navigate(
               RoutePath.DetailScreen.passDrink(
                 it

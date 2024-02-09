@@ -37,7 +37,7 @@ fun NavGraph(
       )
     ) {
       val serializedString = it.arguments?.getString(DETAIL_DEVICE)
-      serializedString?.let { details ->
+      serializedString?.replace( Constants.SLASH_REPLACE, "/")?.let { details ->
         val drink = gson?.fromJson(details, DrinkModel::class.java)
         DetailScreen(
           navController = navController, drinkModel = drink
@@ -53,7 +53,7 @@ open class RoutePath(val route: String) {
 
   data object DetailScreen : RoutePath(route = "DetailScreen/{$DETAIL_DEVICE}") {
     fun passDrink(drink: String): String {
-      return "AddDeviceScreen/$drink"
+      return "DetailScreen/$drink"
     }
   }
 }
