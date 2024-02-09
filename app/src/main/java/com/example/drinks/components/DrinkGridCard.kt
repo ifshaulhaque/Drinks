@@ -18,19 +18,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.drinks.R
 import com.example.drinks.model.DrinkModel
 import kotlin.random.Random
 
 @Composable
 fun DrinkGridCard(
-  drinkModel: DrinkModel
+  drinkModel: DrinkModel,
+  preview: Boolean = false
 ) {
   Box(
     modifier = Modifier
@@ -41,17 +45,35 @@ fun DrinkGridCard(
       .padding(8.dp)
   ) {
     Column {
-      Image(
-        painter = painterResource(id = R.drawable.drink),
-        contentDescription = "drinkImage",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-          .fillMaxWidth()
-          .height(100.dp)
-          .clip(
-            shape = RoundedCornerShape(20.dp)
-          )
-      )
+      if (preview) {
+        Image(
+          painter = painterResource(id = R.drawable.drink),
+          contentDescription = "drinkImage",
+          contentScale = ContentScale.Crop,
+          modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .clip(
+              shape = RoundedCornerShape(20.dp)
+            )
+        )
+      } else {
+        AsyncImage(
+          model = ImageRequest.Builder(LocalContext.current)
+            .data(drinkModel.strDrinkThumb)
+            .crossfade(true)
+            .build(),
+          placeholder = painterResource(R.drawable.drink),
+          contentDescription = "drinkImage",
+          contentScale = ContentScale.Crop,
+          modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .clip(
+              shape = RoundedCornerShape(20.dp)
+            )
+        )
+      }
 
       drinkModel.strDrink?.let {
         Text(
@@ -78,7 +100,6 @@ fun DrinkGridCard(
           fontSize = 16.sp,
           color = MaterialTheme.colorScheme.primary
         ),
-        modifier = Modifier.weight(1f)
       )
 
       Button(
@@ -103,6 +124,7 @@ fun DrinkGridCard(
 @Preview
 fun DrinkGridCardPreview() {
   DrinkGridCard(
+    preview = true,
     drinkModel = DrinkModel(
       idDrink = "12138",
       strDrink = "Scotch Cobbler",
