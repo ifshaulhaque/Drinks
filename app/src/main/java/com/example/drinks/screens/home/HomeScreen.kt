@@ -56,7 +56,7 @@ fun HomeScreen(
     )
 
     if (homeScreenViewModel?.drinkList?.value != null) {
-      DrinkGrid(items = homeScreenViewModel?.drinkList?.value!!)
+      DrinkGrid(items = homeScreenViewModel.drinkList.value, navController = navController)
     } else {
       Text(
         text = "Sorry No Drink is Available",
@@ -72,5 +72,5 @@ fun HomeScreen(
 @Composable
 @Preview
 fun HomeScreenPreview() {
-  HomeScreen(navController = rememberNavController());
+  HomeScreen(navController = rememberNavController())
 }

@@ -3,17 +3,21 @@ package com.example.drinks.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.drinks.model.DrinkModel
 
 @Composable
 fun DrinkGrid(
-  items: List<DrinkModel>
+  items: List<DrinkModel>,
+  navController: NavController
 ) {
   val itemList = arrayListOf<@Composable () -> Unit>()
   items.forEach {item ->
     itemList.add {
       DrinkGridCard(
-        drinkModel = item
+        drinkModel = item,
+        navController = navController
       )
     }
   }
@@ -30,6 +34,7 @@ fun DrinkGrid(
 @Preview
 fun DrinkGridPreview() {
   DrinkGrid(
+    navController = rememberNavController(),
     items = listOf(
       DrinkModel(
         idDrink = "12138",

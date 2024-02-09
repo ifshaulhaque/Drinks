@@ -1,11 +1,11 @@
-package com.example.drinks.components
+package com.example.drinks.screens.detail
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,97 +14,86 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextAlign.Companion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.example.drinks.R
-import com.example.drinks.RoutePath
+import coil.request.ImageRequest.Builder
+import com.example.drinks.R.drawable
 import com.example.drinks.model.DrinkModel
-import com.example.drinks.screens.detail.DetailViewModel
-import kotlin.random.Random
 
 @Composable
-fun DrinkGridCard(
-  drinkModel: DrinkModel,
-  preview: Boolean = false,
+fun DetailScreen(
   navController: NavController,
-  detailViewModel: DetailViewModel? = hiltViewModel()
+  preview: Boolean = false,
+  drinkModel: DrinkModel?
 ) {
-  Box(
+  Column(
+    verticalArrangement = Arrangement.spacedBy(16.dp),
     modifier = Modifier
-      .background(
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        shape = RoundedCornerShape(20.dp)
-      )
-      .clickable {
-        detailViewModel
-          ?.getDrinkString(drinkModel)
-          ?.let {
-            navController.navigate(
-              RoutePath.DetailScreen.passDrink(
-                it
-              )
-            )
-          }
-      }
-      .padding(8.dp)
+      .fillMaxSize()
+      .padding(24.dp)
   ) {
-    Column {
-      if (preview) {
-        Image(
-          painter = painterResource(id = R.drawable.drink),
-          contentDescription = "drinkImage",
-          contentScale = ContentScale.Crop,
-          modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .clip(
-              shape = RoundedCornerShape(20.dp)
-            )
-        )
-      } else {
-        AsyncImage(
-          model = ImageRequest.Builder(LocalContext.current)
-            .data(drinkModel.strDrinkThumb)
-            .crossfade(true)
-            .build(),
-          placeholder = painterResource(R.drawable.drink),
-          contentDescription = "drinkImage",
-          contentScale = ContentScale.Crop,
-          modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .clip(
-              shape = RoundedCornerShape(20.dp)
-            )
-        )
-      }
+    if (preview) {
+      Image(
+        painter = painterResource(id = drawable.drink),
+        contentDescription = "drinkImage",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(300.dp)
+          .clip(
+            shape = RoundedCornerShape(20.dp)
+          )
+      )
+    } else {
+      AsyncImage(
+        model = Builder(LocalContext.current)
+          .data(drinkModel?.strDrinkThumb)
+          .crossfade(true)
+          .build(),
+        placeholder = painterResource(drawable.drink),
+        contentDescription = "drinkImage",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(100.dp)
+          .clip(
+            shape = RoundedCornerShape(20.dp)
+          )
+      )
+    }
 
-      drinkModel.strDrink?.let {
+    Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      modifier = Modifier
+        .fillMaxSize()
+        .weight(1f)
+    ) {
+      drinkModel?.strDrink?.let {
         Text(
           text = it,
           style = TextStyle(
-            fontSize = 16.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold
           )
         )
       }
 
-      drinkModel.strCategory?.let {
+      drinkModel?.strCategory?.let {
         Text(
           text = it,
           style = TextStyle(
@@ -113,36 +102,41 @@ fun DrinkGridCard(
         )
       }
 
-      Text(
-        text = "₹ ${Random.nextInt(100, 2001)}",
-        style = TextStyle(
-          fontSize = 16.sp,
-          color = MaterialTheme.colorScheme.primary
-        ),
-      )
-
-      Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = {}
-      ) {
-        Row {
-          Text(
-            text = "+ Add",
-            style = TextStyle(
-              fontSize = 16.sp,
-              color = Companion.White
-            )
+      drinkModel?.strInstructions?.let {
+        Text(
+          text = it,
+          textAlign = TextAlign.Center,
+          style = TextStyle(
+            fontSize = 12.sp,
+            color = MaterialTheme.colorScheme.tertiary
           )
-        }
+        )
       }
     }
+
+    Button(
+      modifier = Modifier.fillMaxWidth(),
+      onClick = {}
+    ) {
+      Row {
+        Text(
+          text = "+ Add",
+          style = TextStyle(
+            fontSize = 16.sp,
+            color = Color.White
+          )
+        )
+      }
+    }
+
   }
 }
 
 @Composable
-@Preview
-fun DrinkGridCardPreview() {
-  DrinkGridCard(
+@Preview(showBackground = true)
+fun DetailScreenPreview() {
+  DetailScreen(
+    navController = rememberNavController(),
     preview = true,
     drinkModel = DrinkModel(
       idDrink = "12138",
@@ -166,7 +160,6 @@ fun DrinkGridCardPreview() {
       strMeasure5 = "1 ",
       strCreativeCommonsConfirmed = "No",
       dateModified = "2017-09-06 23:17:07"
-    ),
-    navController = rememberNavController()
+    )
   )
 }
