@@ -22,6 +22,7 @@ fun DrinkGrid(
     verticalSpacing = 24.dp,
     horizontalSpacing = 24.dp,
     items = itemList,
+    staggered = true
   )
 }
 
